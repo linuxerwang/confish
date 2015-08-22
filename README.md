@@ -50,9 +50,37 @@ book {
 ```
 
 The confish parser uses the "cfg-attr" tags to locate the corresponding fields
-in structs.
+in structs. Confish supports primitive types and collection types.
 
-Confish supports primitive types and collection types.
+To specify a field of struct type:
+
+```
+	name {
+		...
+	}
+```
+
+To specify a field of slice of struct:
+
+```
+	name {
+		...
+	}
+
+	name {
+		...
+	}
+
+	name {
+		...
+	}
+```
+
+To specify a normal field:
+
+```
+	name: value
+```
 
 Primitive types: string, int, int32, int64, float32, float64, bool.
 Collection types: slice of primitives, map of primitives.
@@ -164,6 +192,39 @@ price-map {
 		"Red": 12.49,
 		"Green": 10.99,
 		"Blue": 13.99,
+	}
+}
+```
+
+*Example for deep struct nesting*
+
+```go
+type A struct {
+	Name string `cfg-attr:"name"`
+}
+
+type B struct {
+	ARef A `cfg-attr:"a"`
+}
+
+type C struct {
+	BRef B `cfg-attr:"b"`
+}
+
+type D struct {
+	CRef C `cfg-attr:"c"`
+}
+
+```
+
+```
+d {
+	c {
+		b {
+			a {
+				name: "John Doe"
+			}
+		}
 	}
 }
 ```
