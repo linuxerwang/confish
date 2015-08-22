@@ -99,6 +99,7 @@ laptop {
 		key-count: 87
 		key-layout: "compact"
 	}
+}
 ```
 
 *Example for simple slice*
@@ -121,6 +122,7 @@ router {
 		"http://www.test.com",
 		"http://www.fishing.com",
 	]
+}
 ```
 
 *Example for slice of structs*
@@ -145,6 +147,7 @@ bookshelf {
 		name: "The Go Programming Language"
 		isbn: "987654321"
 	}
+}
 ```
 
 *Example for maps*
@@ -162,4 +165,5 @@ price-map {
 		"Green": 10.99,
 		"Blue": 13.99,
 	}
+}
 ```
