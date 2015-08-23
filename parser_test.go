@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-type Book struct {
+type book struct {
 	Name   string          `cfg-attr:"name"`
 	ISBN   string          `cfg-attr:"isbn"`
 	Author []string        `cfg-attr:"author"`
@@ -14,9 +14,9 @@ type Book struct {
 	Prices map[int]float32 `cfg-attr:"prices"`
 }
 
-type BookShelf struct {
+type bookShelf struct {
 	Category string  `cfg-attr:"category"`
-	Books    []*Book `cfg-attr:"book"`
+	Books    []*book `cfg-attr:"book"`
 }
 
 func TestParse(t *testing.T) {
@@ -64,23 +64,23 @@ func TestParse(t *testing.T) {
 	}
 	`)
 
-	bs := &BookShelf{}
+	bs := &bookShelf{}
 	err := Parse(booksConf, bs)
 	if err != nil {
 		t.Fatalf("failed to parse confish file")
 	}
 
-	if bs.Category != "Philosophy" {
-		t.Fatalf("got %s, want Philosophy", bs.Category)
+	if bs.Category != "Computer Technology" {
+		t.Fatalf("got %s, want Computer Technology", bs.Category)
 	}
 
 	if len(bs.Books) != 3 {
 		t.Fatalf("got %d books, want 3", len(bs.Books))
 	}
 
-	var b *Book
+	var b *book
 
-	b = &Book{
+	b = &book{
 		"The Go Programming Language",
 		"978-0134190440",
 		[]string{"Alan Donovan", "Brian W. Kernighan"},
@@ -91,7 +91,7 @@ func TestParse(t *testing.T) {
 		t.Fatalf("got book %+v, want %+v", bs.Books[0], b)
 	}
 
-	b = &Book{
+	b = &book{
 		"Go in Action",
 		"978-1617291784",
 		[]string{"William Kennedy", "Brian Ketelsen", "Erik St. Martin"},
@@ -102,7 +102,7 @@ func TestParse(t *testing.T) {
 		t.Fatalf("got book %+v, want %+v", bs.Books[1], b)
 	}
 
-	b = &Book{
+	b = &book{
 		"Conf-ish in Go",
 		"",
 		[]string{},

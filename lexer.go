@@ -277,25 +277,6 @@ func newCfgLex(content []byte, cfgVar interface{}) *cfgLex {
 	}
 }
 
-func indirectVal(val reflect.Value) reflect.Value {
-	for val.Kind() == reflect.Ptr {
-		if val.IsNil() {
-			newVal := reflect.New(val.Type().Elem())
-			val.Set(newVal)
-			return newVal.Elem()
-		}
-		val = val.Elem()
-	}
-	return val
-}
-
-func indirectType(val reflect.Type) reflect.Type {
-	for val.Kind() == reflect.Ptr {
-		val = val.Elem()
-	}
-	return val
-}
-
 func convert(val string, toType reflect.Type) interface{} {
 	switch toType.Kind() {
 	case reflect.String:
