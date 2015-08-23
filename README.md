@@ -25,7 +25,21 @@ type MyConf struct {
 }
 
 conf := &MyConf{}
-err := ParseFile("path/to/myconf.conf", conf)
+err := confish.ParseFile("path/to/myconf.conf", conf)
+...
+```
+
+## Write confish file
+
+```go
+import "github.com/linuxerwang/confish"
+
+type MyConf struct {
+	...
+}
+
+conf := &MyConf{}
+err := confish.WriteFile("path/to/myconf.conf", conf, "my-conf")
 ...
 ```
 
