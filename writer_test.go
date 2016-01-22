@@ -2,10 +2,16 @@ package confish
 
 import (
 	"bytes"
+	"fmt"
 	"reflect"
 	"strings"
 	"testing"
 )
+
+type Description struct {
+	Chinese string `cfg-attr:"chinese"`
+	English string `cfg-attr:"english"`
+}
 
 type wirelessSettings struct {
 	Name     string         `cfg-attr:"name"`
@@ -15,6 +21,7 @@ type wirelessSettings struct {
 	Enabled  bool           `cfg-attr:"enabled"`
 	Strength float32        `cfg-attr:"strength"`
 	Qos      map[string]int `cfg-attr:"qos"`
+	Desc     *Description   `cfg-attr:"description"`
 }
 
 type networkSettings struct {
@@ -33,6 +40,7 @@ func TestWrite(t *testing.T) {
 					"private": 200,
 					"corp":    500,
 				},
+				&Description{"无线网络", "Wireless Network"},
 			},
 			{"Linksys", "linksys-5678-1234", []string{"6", "7", "8", "9", "10"}, 180, true, 0.8,
 				map[string]int{
@@ -40,12 +48,15 @@ func TestWrite(t *testing.T) {
 					"private": 50,
 					"corp":    120,
 				},
+				&Description{"无线网络", "Wireless Network"},
 			},
 		},
 	}
 
 	var b bytes.Buffer
 	Write(&b, ns, "network")
+
+	fmt.Println(b.String())
 
 	restored := &networkSettings{}
 	err := Parse(strings.NewReader(b.String()), restored)

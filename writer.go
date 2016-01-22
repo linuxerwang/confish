@@ -54,7 +54,9 @@ func (cw *confWriter) outputStruct(conf interface{}) error {
 
 		switch ft.Kind() {
 		case reflect.Struct:
+			fmt.Fprintf(cw.w, "%s%s {\n", indent(cw.indentLevel), attr)
 			cw.outputStruct(fv)
+			fmt.Fprintf(cw.w, "%s}\n", indent(cw.indentLevel))
 		case reflect.Slice:
 			cw.outputSlice(attr, fv)
 		case reflect.Map:
@@ -68,8 +70,6 @@ func (cw *confWriter) outputStruct(conf interface{}) error {
 		case reflect.String:
 			fmt.Fprintf(cw.w, "%s%s: \"%s\"\n", indent(cw.indentLevel), attr, fv)
 		}
-
-		fmt.Fprint(cw.w)
 	}
 
 	cw.indentLevel--
